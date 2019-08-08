@@ -21,13 +21,13 @@ header {
 }
 
 aside {
-    flex-basis: 7.6rem;
+    flex-basis: 10rem;
     border: 1px solid;
     align-content: left;
 }
 
 article {
-	flex-basis: 49rem;
+	flex-basis: 88rem;
     border:  1px solid;
     
 }
