@@ -33,18 +33,20 @@
                 </c:when>
             </c:choose>
             <c:set var="goods_count" value="0" />
-            
-            
             <c:forEach var="goods_List" items="${category.value}">
                 <c:set var="goods_count" value="${goods_count+1}" />
-                <img src="${contextPath}/thumbnails?goods_id=${goods_List.goods_id}&fileName=${goods_List.goods_fileName}">
-                <p>
-                    ${goods_List.goods_title}
-                </p>
-                <p>
-                    <fmt:formatNumber value="${goods_List.goods_price}" type="number" var="goods_price" />
-                    ${goods_List.goods_price}원
-                </p>
+               	<div class="book">
+               		<a href ="${contextPath}/goods/goodsDetail?goods_id=${goods_List.goods_id}">
+	                	<img src="${contextPath}/thumbnails?goods_id=${goods_List.goods_id}&fileName=${goods_List.goods_fileName}">
+	                </a>
+	                <p>
+	                    ${goods_List.goods_title}
+	                </p>
+	                <p>
+	                    <fmt:formatNumber value="${goods_List.goods_price}" type="number" var="goods_price" />
+	                    ${goods_List.goods_price}원
+	                </p>
+                </div>
                 <c:if test="${goods_count==15}">
                         <p>
                           <a href="#">more</a>
