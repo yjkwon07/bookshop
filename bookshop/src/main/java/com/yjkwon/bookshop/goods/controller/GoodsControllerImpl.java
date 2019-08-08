@@ -37,7 +37,7 @@ public class GoodsControllerImpl implements GoodsController {
 		ModelAndView mav = new ModelAndView(viewName);
 		HttpSession session = request.getSession();
 		Map<String, Object>goodsMap = (Map<String, Object>)goodsService.goodsDetail(goods_id);
-		mav.addObject(goodsMap);
+		mav.addObject("goodsMap",goodsMap);
 		GoodsVO goodsVO = (GoodsVO)goodsMap.get("goodsVO");
 		getQuickMenuData(goods_id, goodsVO, session);
 		return mav;
@@ -65,25 +65,22 @@ public class GoodsControllerImpl implements GoodsController {
 		String viewName = (String)request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView(viewName);
 		List<GoodsVO> goodsList = (ArrayList<GoodsVO>)goodsService.searchGoods(searchWord);
-		System.out.println(goodsList);
-		mav.addObject(goodsList);
+		mav.addObject("goodsList" ,goodsList);
 		return mav;
 	}
 
 	protected void getQuickMenuData(String goods_id,GoodsVO goodsVO,HttpSession session) {
-		List<GoodsVO>quickGoodsList = (ArrayList<GoodsVO>)session.getAttribute("quickGoodsList");
-		if (quickGoodsList != null) {
-			int targtGoodsId = Integer.parseInt(goods_id);
-			quickGoodsList = quickGoodsList.stream().filter(compare->compare.getGoods_id() != targtGoodsId)
+		List<GoodsVO> quickGoodsList=quickGoodsList=(ArrayList<GoodsVO>)session.getAttribute("quickGoodsList");
+		if (quickGoodsList!=null && quickGoodsList.size()<4) {
+			int targtGoodsId=Integer.parseInt(goods_id);
+			quickGoodsList=quickGoodsList.stream().filter(compare->compare.getGoods_id()!=targtGoodsId)
 					.collect(Collectors.toList());
-			if (quickGoodsList.size() < 4) {// 미리본 상품 리스트에 상품개수가 세개 이하인 경우
-				quickGoodsList.add(goodsVO);
-			} else {
-				quickGoodsList = new ArrayList<GoodsVO>();
-				quickGoodsList.add(goodsVO);
-			}
-			session.setAttribute("quickGoodsList",quickGoodsList);
-			session.setAttribute("quickGoodsListNum",quickGoodsList.size());
+			quickGoodsList.add(goodsVO);
+		} else {
+			quickGoodsList=new ArrayList<GoodsVO>();
+			quickGoodsList.add(goodsVO);
 		}
+		session.setAttribute("quickGoodsList",quickGoodsList);
+		session.setAttribute("quickGoodsListNum",quickGoodsList.size());
 	}
 }
