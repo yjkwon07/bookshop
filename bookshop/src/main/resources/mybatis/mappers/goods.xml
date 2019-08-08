@@ -49,18 +49,18 @@
 	    ]]>
 	</select>
 
-	<select id="selectGoodsDetail" resultMap="goodsResult" parameterType="String">
+	<select id="selectGoodsDetail" parameterType="String" resultMap="goodsResult" >
 	    <![CDATA[
-	    	select shopping.*, detail.fileName 
+		    select shopping.*, detail.fileName 
 			    from t_shopping_goods shopping, t_goods_detail_image detail
 			    where shopping.goods_id = detail.goods_id
 			        and detail.filetype = 'main_image'
 			        and shopping.goods_id = #{goods_id}
-				order by shopping.goods_id
+			order by shopping.goods_id
     	]]>
 	</select>
 	
-	<select id="selectGoodsDetailImage" resultMap="imageResult" parameterType="String">
+	<select id="selectGoodsDetailImage" parameterType="String" resultMap="imageResult">
 	    <![CDATA[
 	    	select * from t_goods_detail_image
                 where fileType != 'main_image'
@@ -68,8 +68,7 @@
     	]]>
 	</select>
 
-	<select id="selectGoodsBySearchWord" resultMap="goodsResult"
-		parameterType="String">
+	<select id="selectGoodsBySearchWord" parameterType="String" resultMap="goodsResult" >
      <![CDATA[
      	select shopping.*, detail.fileName from t_shopping_goods shopping, t_goods_detail_image detail
                 where shopping.goods_id = detail.goods_id
@@ -79,7 +78,7 @@
 		]]>
 	</select>
 
-	<select id="selectKeywordSearch" resultType="String" parameterType="String">
+	<select id="selectKeywordSearch" parameterType="String" resultType="String">
 	    <![CDATA[
 	    	select goods_title from t_shopping_goods
 	                where goods_title like  '%' || #{keyword} || '%'
