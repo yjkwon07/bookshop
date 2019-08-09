@@ -37,7 +37,7 @@ public class GoodsControllerImpl implements GoodsController {
 		ModelAndView mav = new ModelAndView(viewName);
 		HttpSession session = request.getSession();
 		Map<String, Object>goodsMap = (Map<String, Object>)goodsService.goodsDetail(goods_id);
-		mav.addObject(goodsMap);
+		mav.addObject("goodsMap",goodsMap);
 		GoodsVO goodsVO = (GoodsVO)goodsMap.get("goodsVO");
 		getQuickMenuData(goods_id, goodsVO, session);
 		return mav;
@@ -76,7 +76,7 @@ public class GoodsControllerImpl implements GoodsController {
 			int targtGoodsId = Integer.parseInt(goods_id);
 			quickGoodsList = quickGoodsList.stream().filter(compare->compare.getGoods_id() != targtGoodsId)
 					.collect(Collectors.toList());
-			if (quickGoodsList.size() < 4) {// 미리본 상품 리스트에 상품개수가 세개 이하인 경우
+			if (quickGoodsList.size() < 4) {
 				quickGoodsList.add(goodsVO);
 			} else {
 				quickGoodsList = new ArrayList<GoodsVO>();
