@@ -6,7 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 <c:set var="goods"  value="${goodsMap.goodsVO}"  />
-<c:set var="imageList"  value="${goodsMap.imageList }"/>
+<c:set var="imageList"  value="${goodsMap.imageList}"/>
 <%
 	//치환 변수 선언합니다.
 	pageContext.setAttribute("crcn", "\r\n"); //개행문자
@@ -21,7 +21,7 @@
 </head>
 <body>
 	<hgroup>
-			<p>${goods.goods_title }</p>
+			<p>${goods.goods_title}</p>
 			<p>${goods.goods_writer} 저| ${goods.goods_publisher}</p>
 	</hgroup>
 	
