@@ -65,25 +65,23 @@ public class GoodsControllerImpl implements GoodsController {
 		String viewName = (String)request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView(viewName);
 		List<GoodsVO> goodsList = (ArrayList<GoodsVO>)goodsService.searchGoods(searchWord);
-		System.out.println(goodsList);
-		mav.addObject(goodsList);
+		mav.addObject("goodsList" ,goodsList);
 		return mav;
 	}
 
 	protected void getQuickMenuData(String goods_id,GoodsVO goodsVO,HttpSession session) {
-		List<GoodsVO>quickGoodsList = (ArrayList<GoodsVO>)session.getAttribute("quickGoodsList");
-		if (quickGoodsList != null) {
-			int targtGoodsId = Integer.parseInt(goods_id);
-			quickGoodsList = quickGoodsList.stream().filter(compare->compare.getGoods_id() != targtGoodsId)
+		List<GoodsVO> quickGoodsList=quickGoodsList=(ArrayList<GoodsVO>)session.getAttribute("quickGoodsList");
+		if (quickGoodsList!=null && quickGoodsList.size()<4) {
+			int targtGoodsId=Integer.parseInt(goods_id);
+			quickGoodsList=quickGoodsList.stream().filter(compare->compare.getGoods_id()!=targtGoodsId)
 					.collect(Collectors.toList());
-			if (quickGoodsList.size() < 4) {
-				quickGoodsList.add(goodsVO);
-			} else {
-				quickGoodsList = new ArrayList<GoodsVO>();
+			quickGoodsList.add(goodsVO);
+		 	} else {
+				quickGoodsList=new ArrayList<GoodsVO>();
 				quickGoodsList.add(goodsVO);
 			}
-			session.setAttribute("quickGoodsList",quickGoodsList);
-			session.setAttribute("quickGoodsListNum",quickGoodsList.size());
-		}
+		System.out.println("!"+quickGoodsList);
+		session.setAttribute("quickGoodsList",quickGoodsList);
+		session.setAttribute("quickGoodsListNum",quickGoodsList.size());
 	}
 }
